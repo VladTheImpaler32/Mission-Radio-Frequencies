@@ -1,5 +1,9 @@
 <head>
 <script src="jQuery.js"></script>
+<script src="cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js">
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+} );</script>
 <script src="sorttable.js"></script>
 <style>
 table tr:nth-child(odd) td{
@@ -1404,18 +1408,3 @@ table tr:nth-child(odd) td{
 </tr>
 </tbody>
 </table>
-
-<script>
-var $rows = $('myTable tr');
-$('search').keyup(function() {
-
-    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-        reg = RegExp(val, 'i'),
-        text;
-
-    $rows.show().filter(function() {
-        text = $(this).text().replace(/\s+/g, ' ');
-        return !reg.test(text);
-    }).hide();
-});
-</script>
