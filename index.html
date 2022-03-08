@@ -14,7 +14,8 @@ table tr:nth-child(odd) td{
  <li><a href="https://www.radioreference.com/apps/db/?ctid=5553" style="color:black"">RadioReference</a></li><br><br><br><br>
    
    
-<input type="search" placeholder="Search..." data-table="customers-list"/>
+
+<input type="text" id="search" placeholder="Type to search">
 <table border=1 bordercolor=black class="sortable" id="myTable">
 <tbody>
 <tr>
@@ -1403,43 +1404,17 @@ table tr:nth-child(odd) td{
 </tbody>
 </table>
 
-    <script>
-        (function(document) {
-            'use strict';
+<script>
+var $rows = $('myTable tr');
+$('search').keyup(function() {
 
-            var TableFilter = (function(myArray) {
-                var search_input;
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
 
-                function _onInputSearch(e) {
-                    search_input = e.target;
-                    var tables = document.getElementsByClassName(search_input.getAttribute('data-table'));
-                    myArray.forEach.call(tables, function(table) {
-                        myArray.forEach.call(table.tBodies, function(tbody) {
-                            myArray.forEach.call(tbody.rows, function(row) {
-                                var text_content = row.textContent.toLowerCase();
-                                var search_val = search_input.value.toLowerCase();
-                                row.style.display = text_content.indexOf(search_val) > -1 ? '' : 'none';
-                            });
-                        });
-                    });
-                }
-
-                return {
-                    init: function() {
-                        var inputs = document.getElementsByClassName('search-input');
-                        myArray.forEach.call(inputs, function(input) {
-                            input.oninput = _onInputSearch;
-                        });
-                    }
-                };
-            })(Array.prototype);
-
-            document.addEventListener('readystatechange', function() {
-                if (document.readyState === 'complete') {
-                    TableFilter.init();
-                }
-            });
-
-        })(document);
-    </script>
-
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+});
+</script>
