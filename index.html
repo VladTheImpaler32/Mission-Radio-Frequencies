@@ -14,7 +14,7 @@ table tr:nth-child(odd) td{
  <li><a href="https://www.radioreference.com/apps/db/?ctid=5553" style="color:black"">RadioReference</a></li><br><br><br><br>
    
    
-<input type="text" id="search" placeholder="Type to search">
+<input id='myInput' onkeyup='searchTable()' type='text'>
 <table border=1 bordercolor=black class="sortable" id="table">
 <tbody>
 <tr>
@@ -1404,14 +1404,26 @@ table tr:nth-child(odd) td{
 </table>
 
 <script>
-var $rows = $('#table tr');
-$('#search').keyup(function() {
-    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-    
-    $rows.show().filter(function() {
-        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        return !~text.indexOf(val);
-    }).hide();
-});
+function searchTable() {
+    var input, filter, found, table, tr, td, i, j;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("Table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td");
+        for (j = 0; j < td.length; j++) {
+            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                found = true;
+            }
+        }
+        if (found) {
+            tr[i].style.display = "";
+            found = false;
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
 </script>
 
