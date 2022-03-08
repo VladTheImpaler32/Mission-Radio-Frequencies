@@ -12,7 +12,10 @@ table tr:nth-child(odd) td{
 <h3><b><u>Sources</b></u></h3>
  <li><a href="https://tafl.mckie.ca/" style="color:black"">TAFL Database</a>
  <li><a href="https://www.radioreference.com/apps/db/?ctid=5553" style="color:black"">RadioReference</a><br><br><br><br>
-<table border=1 bordercolor=black class="sortable">
+   
+   
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search" title="Type in a name">
+<table border=1 bordercolor=black class="sortable" id="FreqTable">
 <tbody>
 <tr>
 <th><strong>Frequency</strong></th>
@@ -1399,3 +1402,28 @@ table tr:nth-child(odd) td{
 </tr>
 </tbody>
 </table>
+
+
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("FreqTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+
+
