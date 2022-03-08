@@ -14,7 +14,7 @@ table tr:nth-child(odd) td{
  <li><a href="https://www.radioreference.com/apps/db/?ctid=5553" style="color:black"">RadioReference</a><br><br><br><br>
    
    
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search" title="Type in a name">
+<input type="text" id="search" placeholder="Type to search">
 <table border=1 bordercolor=black class="sortable" id="FreqTable">
 <tbody>
 <tr>
@@ -1403,27 +1403,15 @@ table tr:nth-child(odd) td{
 </tbody>
 </table>
 
-
-
 <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("FreqTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
+var $rows = $('#table tr');
+$('#search').keyup(function() {
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+    
+    $rows.show().filter(function() {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+    }).hide();
+});
 </script>
-
 
